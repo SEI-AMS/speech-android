@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<EditTextPreference android:summary="Server IP Address"
+		android:key="@string/pref_ipaddress" android:defaultValue="@string/default_ipaddress"
+		android:title="IP Address" />
+	<EditTextPreference android:summary="Server port number"
+		android:key="@string/pref_portnumber" android:defaultValue="@string/default_portnumber"
+		android:title="Port Number" />
+	<Preference android:key="@string/pref_directory" android:title="Audio Directory" android:summary="Directory containing audio files" android:defaultValue="@string/default_directory"/>
+
+
+</PreferenceScreen>
