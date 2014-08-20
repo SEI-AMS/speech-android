@@ -312,9 +312,11 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 				outToServer = new DataOutputStream( socket.getOutputStream() );
 				inFromServer = new DataInputStream( socket.getInputStream() );
 
+                Log.d("FACE", "START SENDING FILES");
 				int filesProccessed = 1;				
 				for( final File file: fileList )
 				{
+                    Log.d("FACE", "SENDING FILE: " +file.getName() );
 					publishProgress("Sending " +filesProccessed +" / " + fileCount +" file(s) \n" 
 							+file.getName() +"\n" +"File size is " + file.length() +" bytes" );
 					requestSendTime = System.currentTimeMillis();
@@ -324,6 +326,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 					publishProgress("Getting response from server..." );
 					int responseSize = inFromServer.readInt();
 					publishProgress("Response size is " + responseSize +" bytes" );
+                    Log.d("FACE", "Received response for : " +file.getName() );
 					
 					if(responseSize > 0 )
 					{
@@ -336,6 +339,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 						publishProgress( response );
 						publishProgress("Request Send Time: " + requestSendTime );
 						publishProgress("Response Recieved Time: " + responseReceivedTime );
+                        Log.d("FACE", "Response time: " + rttForCurrentRequest);
 						publishProgress("RTT Current Request: " + rttForCurrentRequest );
 						publishProgress("RTT Previous Request: " + rttForPreviousRequest );
 						publishProgress( "----------");
