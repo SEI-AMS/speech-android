@@ -12,7 +12,7 @@ apply plugin: 'android'
 repositories {
     mavenLocal()
     maven {
-        url 'http://aurora/artifactory/release'
+        url 'http://m2.ssdlab.sei.cmu.edu/release/'
     }
     mavenCentral()
 }
