@@ -4,9 +4,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.8.+'
+        classpath 'com.android.tools.build:gradle:1.1.0'
     }
 }
+
 apply plugin: 'android'
 
 repositories {
@@ -29,7 +30,7 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
         }
     }
 
