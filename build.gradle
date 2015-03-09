@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.8.+'
     }
 }
 apply plugin: 'android'
@@ -12,14 +12,14 @@ apply plugin: 'android'
 repositories {
     mavenLocal()
     maven {
-        url 'http://m2.ssdlab.sei.cmu.edu/release/'
+        url 'http://m2.ssdlab.sei.cmu.edu/release'
     }
     mavenCentral()
 }
 
 android {
     compileSdkVersion 17
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
         minSdkVersion 15
@@ -47,8 +47,8 @@ android {
 dependencies {
     compile (
         'com.android.support:appcompat-v7:19.+',
-        'edu.cmu.sei.ams.cloudlet:client-lib:1.3',
-        'edu.cmu.sei.ams.cloudlet:client-lib-android:1.1',
+        'edu.cmu.sei.ams.cloudlet:client-lib:1.13.2',
+        'edu.cmu.sei.ams.cloudlet:client-lib-android:1.6.1'
     )
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
