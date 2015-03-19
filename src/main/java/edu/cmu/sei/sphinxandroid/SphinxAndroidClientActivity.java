@@ -63,7 +63,9 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 	public static final int MENU_ID_CLEAR = 111163;
 	
 	public static final String INTENT_EXTRA_APP_SERVER_IP_ADDRESS = "edu.cmu.sei.cloudlet.appServerIp";
-	public static final String INTENT_EXTRA_APP_SERVER_PORT ="edu.cmu.sei.cloudlet.appServerPort";	
+	public static final String INTENT_EXTRA_APP_SERVER_PORT ="edu.cmu.sei.cloudlet.appServerPort";
+
+    private static final String SERVICE_ID = "edu.cmu.sei.ams.speech_rec_service";
 
 	private String ipAddress;
 	private int portNumber;
@@ -105,7 +107,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 		loadPreferences();
 
         // Code to get cloudlet
-        new FindCloudletAndStartService(this, "edu.cmu.sei.ams.speech_rec_service", new CpuBasedRanker(), new CloudletCallback<ServiceVM>()
+        new FindCloudletAndStartService(this, this.SERVICE_ID, new CpuBasedRanker(), new CloudletCallback<ServiceVM>()
         {
             @Override
             public void handle(ServiceVM result)
