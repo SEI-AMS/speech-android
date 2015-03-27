@@ -54,21 +54,18 @@ import edu.cmu.sei.ams.cloudlet.ServiceVM;
 import edu.cmu.sei.ams.cloudlet.android.CloudletCallback;
 import edu.cmu.sei.ams.cloudlet.android.FindCloudletAndStartService;
 import edu.cmu.sei.ams.cloudlet.rank.CpuBasedRanker;
+import edu.cmu.sei.ams.cloudlet.android.ServiceConnectionInfo;
 
 public class SphinxAndroidClientActivity extends Activity implements OnClickListener
 {
-	public static final String LOG_KEY = "LOG_KEY";
+	public static final String LOG_KEY = "Speech";
 	
 	public static final int MENU_ID_SETTINGS = 92189;
 	public static final int MENU_ID_CLEAR = 111163;
 	
-	public static final String INTENT_EXTRA_APP_SERVER_IP_ADDRESS = "edu.cmu.sei.cloudlet.appServerIp";
-	public static final String INTENT_EXTRA_APP_SERVER_PORT ="edu.cmu.sei.cloudlet.appServerPort";
-
     private static final String SERVICE_ID = "edu.cmu.sei.ams.speech_rec_service";
 
-	private String ipAddress;
-	private int portNumber;
+	private ServiceConnectionInfo connectionInfo = new ServiceConnectionInfo();
 	private String directoryString;
 
 	private Socket socket;
@@ -101,36 +98,37 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 		
 		sendButton = (Button)findViewById(R.id.send_button);
 		sendButton.setOnClickListener( this );
-		
-		storeServerConnectionInfo(getIntent());		
 
-		loadPreferences();
+        loadPreferences();
 
-        // Code to get cloudlet
-        new FindCloudletAndStartService(this, this.SERVICE_ID, new CpuBasedRanker(), new CloudletCallback<ServiceVM>()
+        if(this.connectionInfo.loadFromIntent(getIntent()))
         {
-            @Override
-            public void handle(ServiceVM result)
-            {
-                if (result == null)
-                {
-                    Toast.makeText(SphinxAndroidClientActivity.this, "Failed to locate a cloudlet for this app", Toast.LENGTH_LONG).show();
-                    return;
+            this.connectionInfo.storeIntoPreferences(this, getString( R.string.pref_ipaddress),
+                    getString( R.string.pref_directory));
+        }
+        else
+        {
+            // Code to get cloudlet
+            new FindCloudletAndStartService(this, this.SERVICE_ID, new CpuBasedRanker(), new CloudletCallback<ServiceVM>() {
+                @Override
+                public void handle(ServiceVM result) {
+                    if (result == null) {
+                        Toast.makeText(SphinxAndroidClientActivity.this, "Failed to locate a cloudlet for this app", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    Log.v("FACE", "GOT SERVICE RESULT: " + result.getInstanceId());
+
+                    Toast.makeText(SphinxAndroidClientActivity.this, "Located a cloudlet to use!", Toast.LENGTH_LONG).show();
+
+                    connectionInfo.setIpAddress(result.getAddress().getHostAddress());
+                    connectionInfo.setPortNumber(result.getPort());
+                    connectionInfo.storeIntoPreferences(SphinxAndroidClientActivity.this,
+                            SphinxAndroidClientActivity.this.getString(R.string.pref_ipaddress),
+                            SphinxAndroidClientActivity.this.getString(R.string.pref_portnumber));
                 }
-
-                Log.v("FACE", "GOT SERVICE RESULT: " + result.getInstanceId());
-
-                Toast.makeText(SphinxAndroidClientActivity.this, "Located a cloudlet to use!", Toast.LENGTH_LONG).show();
-
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SphinxAndroidClientActivity.this);
-                SharedPreferences.Editor prefsEditor = prefs.edit();
-                prefsEditor.putString(SphinxAndroidClientActivity.this.getString(R.string.pref_ipaddress), result.getAddress().getHostAddress());
-                prefsEditor.putString(SphinxAndroidClientActivity.this.getString(R.string.pref_portnumber), "" + result.getPort());
-                prefsEditor.commit();
-
-                loadPreferences();
-            }
-        }).execute();
+            }).execute();
+        }
 
 		loadCurrentFileList();
 	}
@@ -161,7 +159,11 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 	@Override
 	protected void onResume() 
 	{
-		storeServerConnectionInfo(getIntent());		
+        if(this.connectionInfo.loadFromIntent(getIntent()))
+        {
+            this.connectionInfo.storeIntoPreferences(this, getString( R.string.pref_ipaddress),
+                                                     getString( R.string.pref_directory));
+        }
 
 		loadPreferences();
 
@@ -199,51 +201,12 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 	public void loadPreferences()
 	{
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( this );
-		this.ipAddress = prefs.getString( getString( R.string.pref_ipaddress), getString(R.string.default_ipaddress) );
-		this.portNumber = Integer.parseInt( prefs.getString(getString( R.string.pref_portnumber), getString(R.string.default_portnumber)) );
+		this.connectionInfo.setIpAddress(prefs.getString(getString(R.string.pref_ipaddress), getString(R.string.default_ipaddress)));
+		this.connectionInfo.setPortNumber(Integer.parseInt(prefs.getString(getString(R.string.pref_portnumber), getString(R.string.default_portnumber))));
 		this.directoryString = prefs.getString( getString( R.string.pref_directory), getString(R.string.default_directory));
 		currentDirTextView.setText( directoryString );
 	}
-	
-	// Stores the information about the remote server to connect to from the Intent in the preferences, 
-	// if there is information available.
-	private void storeServerConnectionInfo(Intent intent)
-	{
-		if(intent == null)
-			return;
-		
-		Bundle extras = intent.getExtras();
 
-        if(extras != null)
-        {
-        	// Get the values from the intent.
-        	String serverIPAddress = extras.getString(INTENT_EXTRA_APP_SERVER_IP_ADDRESS);
-        	int cloudletPort = extras.getInt(INTENT_EXTRA_APP_SERVER_PORT); 
-        	
-        	// Only store the IP and port in the preferences file if they are valid.
-        	boolean validExtras = serverIPAddress != null && cloudletPort != 0;
-        	if(validExtras)
-        	{
-        		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( this );
-        		SharedPreferences.Editor prefsEditor = prefs.edit();
-        		prefsEditor.putString(getString(R.string.pref_ipaddress), serverIPAddress);
-        		prefsEditor.putString(getString(R.string.pref_portnumber), String.valueOf(cloudletPort));
-        		prefsEditor.commit();
-        		
-            	// Remove the extras so that they won't be used again each time we jump back to this activity.
-            	intent.removeExtra(INTENT_EXTRA_APP_SERVER_IP_ADDRESS);
-            	intent.removeExtra(INTENT_EXTRA_APP_SERVER_PORT);
-            	
-    			Log.w(LOG_KEY, "Server IP address and Port received from Intent.");        		
-        	}        	
-        }
-        else
-        {
-			Log.w(LOG_KEY,
-					"Server IP address and Port not received from Intent. Values from preferences will not be changed.");
-        }
-	}	
-	
 	/**
 	 * @author gmcahill
 	 * A sync task for sending audio
@@ -308,7 +271,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 				}
 
 				socket = new Socket();
-				socket.connect(new InetSocketAddress( ipAddress, portNumber ), 5000 );
+				socket.connect(new InetSocketAddress(connectionInfo.getIpAddress(), connectionInfo.getPortNumber() ), 5000 );
 				publishProgress("Connected to server " + socket.getInetAddress() +" on port " + socket.getPort() );
 
 				outToServer = new DataOutputStream( socket.getOutputStream() );
