@@ -159,13 +159,13 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 	@Override
 	protected void onResume() 
 	{
+        loadPreferences();
+
         if(this.connectionInfo.loadFromIntent(getIntent()))
         {
             this.connectionInfo.storeIntoPreferences(this, getString( R.string.pref_ipaddress),
-                                                     getString( R.string.pref_directory));
+                                                     getString( R.string.pref_portnumber));
         }
-
-		loadPreferences();
 
 		loadCurrentFileList();
 		
