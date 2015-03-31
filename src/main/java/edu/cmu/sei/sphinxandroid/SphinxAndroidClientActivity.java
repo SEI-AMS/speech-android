@@ -101,6 +101,11 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 
         loadPreferences();
 
+		loadCurrentFileList();
+	}
+
+    protected void findService()
+    {
         if(this.connectionInfo.loadFromIntent(getIntent()))
         {
             this.connectionInfo.storeIntoPreferences(this, getString( R.string.pref_ipaddress),
@@ -129,10 +134,8 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
                 }
             }).execute();
         }
+    }
 
-		loadCurrentFileList();
-	}
-	
 	private void loadCurrentFileList()
 	{
 		directory = new File( directoryString );
@@ -159,16 +162,8 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 	@Override
 	protected void onResume() 
 	{
-        loadPreferences();
+        findService();
 
-        if(this.connectionInfo.loadFromIntent(getIntent()))
-        {
-            this.connectionInfo.storeIntoPreferences(this, getString( R.string.pref_ipaddress),
-                                                     getString( R.string.pref_portnumber));
-        }
-
-		loadCurrentFileList();
-		
 		super.onResume();
 	}
 
