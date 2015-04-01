@@ -10,14 +10,14 @@ Any opinions, findings and conclusions or recommendations expressed in this mate
 author(s) and do not necessarily reflect the views of the United States Department of Defense.
 
 NO WARRANTY
-THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE MATERIAL IS FURNISHED ON AN “AS-IS” 
+THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE MATERIAL IS FURNISHED ON AN "AS-IS"
 BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED, AS TO ANY 
 MATTER INCLUDING, BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY, EXCLUSIVITY, 
 OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON UNIVERSITY DOES NOT MAKE ANY WARRANTY OF 
 ANY KIND WITH RESPECT TO FREEDOM FROM PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
 
 This material contains SEI Proprietary Information and may not be disclosed outside of the SEI without 
-the written consent of the Director’s Office and completion of the Disclosure of Information process.
+the written consent of the Director's Office and completion of the Disclosure of Information process.
 ------------
 **/
 
