@@ -109,7 +109,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
         if(this.connectionInfo.loadFromIntent(getIntent()))
         {
             this.connectionInfo.storeIntoPreferences(this, getString( R.string.pref_ipaddress),
-                    getString( R.string.pref_directory));
+                    getString( R.string.pref_portnumber));
         }
         else
         {
