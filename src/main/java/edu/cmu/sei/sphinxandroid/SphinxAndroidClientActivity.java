@@ -1,25 +1,32 @@
-/**
----------------------
-Copyright 2012 Carnegie Mellon University
+/*
+KVM-based Discoverable Cloudlet (KD-Cloudlet) 
+Copyright (c) 2015 Carnegie Mellon University.
+All Rights Reserved.
 
-This material is based upon work funded and supported by the Department of Defense under Contract No. 
-FA8721-05-C-0003 with Carnegie Mellon University for the operation of the Software Engineering Institute, 
-a federally funded research and development center.
+THIS SOFTWARE IS PROVIDED "AS IS," WITH NO WARRANTIES WHATSOEVER. CARNEGIE MELLON UNIVERSITY EXPRESSLY DISCLAIMS TO THE FULLEST EXTENT PERMITTEDBY LAW ALL EXPRESS, IMPLIED, AND STATUTORY WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT OF PROPRIETARY RIGHTS.
 
-Any opinions, findings and conclusions or recommendations expressed in this material are those of the 
-author(s) and do not necessarily reflect the views of the United States Department of Defense.
+Released under a modified BSD license, please see license.txt for full terms.
+DM-0002138
 
-NO WARRANTY
-THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE MATERIAL IS FURNISHED ON AN �AS-IS� 
-BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED, AS TO ANY 
-MATTER INCLUDING, BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY, EXCLUSIVITY, 
-OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON UNIVERSITY DOES NOT MAKE ANY WARRANTY OF 
-ANY KIND WITH RESPECT TO FREEDOM FROM PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
+KD-Cloudlet includes and/or makes use of the following Third-Party Software subject to their own licenses:
+MiniMongo
+Copyright (c) 2010-2014, Steve Lacy 
+All rights reserved. Released under BSD license.
+https://github.com/MiniMongo/minimongo/blob/master/LICENSE
 
-This material contains SEI Proprietary Information and may not be disclosed outside of the SEI without 
-the written consent of the Director�s Office and completion of the Disclosure of Information process.
-------------
-**/
+Bootstrap
+Copyright (c) 2011-2015 Twitter, Inc.
+Released under the MIT License
+https://github.com/twbs/bootstrap/blob/master/LICENSE
+
+jQuery JavaScript Library v1.11.0
+http://jquery.com/
+Includes Sizzle.js
+http://sizzlejs.com/
+Copyright 2005, 2014 jQuery Foundation, Inc. and other contributors
+Released under the MIT license
+http://jquery.org/license
+*/
 
 package edu.cmu.sei.sphinxandroid;
 
