@@ -113,34 +113,26 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 
     protected void findService()
     {
-        if(this.connectionInfo.loadFromIntent(getIntent()))
-        {
-            this.connectionInfo.storeIntoPreferences(this, getString( R.string.pref_ipaddress),
-                    getString( R.string.pref_portnumber));
-        }
-        else
-        {
-            // Code to get cloudlet
-            new FindCloudletAndStartService(this, this.SERVICE_ID, new CpuBasedRanker(), new CloudletCallback<ServiceVM>() {
-                @Override
-                public void handle(ServiceVM result) {
-                    if (result == null) {
-                        Toast.makeText(SphinxAndroidClientActivity.this, "Failed to locate a cloudlet for this app", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    Log.v("FACE", "GOT SERVICE RESULT: " + result.getInstanceId());
-
-                    Toast.makeText(SphinxAndroidClientActivity.this, "Located a cloudlet to use!", Toast.LENGTH_LONG).show();
-
-                    connectionInfo.setIpAddress(result.getAddress().getHostAddress());
-                    connectionInfo.setPortNumber(result.getPort());
-                    connectionInfo.storeIntoPreferences(SphinxAndroidClientActivity.this,
-                            SphinxAndroidClientActivity.this.getString(R.string.pref_ipaddress),
-                            SphinxAndroidClientActivity.this.getString(R.string.pref_portnumber));
+        // Code to get cloudlet
+        new FindCloudletAndStartService(this, this.SERVICE_ID, new CpuBasedRanker(), new CloudletCallback<ServiceVM>() {
+            @Override
+            public void handle(ServiceVM result) {
+                if (result == null) {
+                    Toast.makeText(SphinxAndroidClientActivity.this, "Failed to locate a cloudlet for this app", Toast.LENGTH_LONG).show();
+                    return;
                 }
-            }).execute();
-        }
+
+                Log.v("FACE", "GOT SERVICE RESULT: " + result.getInstanceId());
+
+                Toast.makeText(SphinxAndroidClientActivity.this, "Located a cloudlet to use!", Toast.LENGTH_LONG).show();
+
+                connectionInfo.setIpAddress(result.getAddress().getHostAddress());
+                connectionInfo.setPortNumber(result.getPort());
+                connectionInfo.storeIntoPreferences(SphinxAndroidClientActivity.this,
+                        SphinxAndroidClientActivity.this.getString(R.string.pref_ipaddress),
+                        SphinxAndroidClientActivity.this.getString(R.string.pref_portnumber));
+            }
+        }).execute();
     }
 
 	private void loadCurrentFileList()
