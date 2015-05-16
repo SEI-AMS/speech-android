@@ -62,6 +62,8 @@ import edu.cmu.sei.ams.cloudlet.android.CloudletCallback;
 import edu.cmu.sei.ams.cloudlet.android.FindCloudletAndStartService;
 import edu.cmu.sei.ams.cloudlet.rank.CpuBasedRanker;
 import edu.cmu.sei.ams.cloudlet.android.ServiceConnectionInfo;
+import edu.cmu.sei.ams.cloudlet.rank.CpuPerformanceRanker;
+import edu.cmu.sei.ams.cloudlet.rank.MemoryPerformanceRanker;
 
 public class SphinxAndroidClientActivity extends Activity implements OnClickListener
 {
@@ -118,7 +120,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
             @Override
             public void handle(ServiceVM result) {
                 if (result == null) {
-                    Toast.makeText(SphinxAndroidClientActivity.this, "Failed to locate a cloudlet for this app", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SphinxAndroidClientActivity.this, "Failed to locate a cloudlet, or service not available", Toast.LENGTH_LONG).show();
                     return;
                 }
 

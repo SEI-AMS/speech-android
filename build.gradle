@@ -48,8 +48,9 @@ android {
 dependencies {
     compile (
         'com.android.support:appcompat-v7:19.+',
-        'edu.cmu.sei.ams.cloudlet:client-lib:1.13.2',
-        'edu.cmu.sei.ams.cloudlet:client-lib-android:1.7.1'
+        'edu.cmu.sei.ams.cloudlet:client-lib:1.13.3',
+        'edu.cmu.sei.ams.cloudlet:client-lib-android:1.7.2',
+        'edu.cmu.sei.ams.log:android-slf4j-logger:1.4.1'
     )
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
