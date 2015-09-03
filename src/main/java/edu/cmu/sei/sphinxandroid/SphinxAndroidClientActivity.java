@@ -144,25 +144,33 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 		{
 			Toast.makeText( this, "Directory does not exist", Toast.LENGTH_SHORT).show();
 		}
-		
-		fileList = Arrays.asList( directory.listFiles( new FileFilter() 
+		else
 		{
-			@Override
-			public boolean accept(File pathname) 
-			{
-				if( pathname.toString().endsWith(".wav")
-						|| pathname.toString().endsWith(".WAV") )
-				{
-					return true;
+			File[] files = directory.listFiles(new FileFilter() {
+				@Override
+				public boolean accept(File pathname) {
+					if (pathname.toString().endsWith(".wav")
+							|| pathname.toString().endsWith(".WAV")) {
+						return true;
+					}
+					return false;
 				}
-				return false;
-			}
-		}));		
+			});
+
+            if(files != null) {
+                fileList = Arrays.asList(files);
+            }
+            else
+            {
+                Toast.makeText( this, "No files found in selected folder.", Toast.LENGTH_SHORT).show();
+            }
+		}
 	}
 
 	@Override
 	protected void onResume() 
 	{
+        loadPreferences();
         findService();
 
 		super.onResume();
@@ -172,7 +180,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
 		menu.add(0, MENU_ID_SETTINGS, 0, getString( R.string.menu_settings) );
-		menu.add(0, MENU_ID_CLEAR, 1, getString( R.string.menu_clear) );
+		menu.add(0, MENU_ID_CLEAR, 1, getString(R.string.menu_clear));
 		return super.onCreateOptionsMenu(menu);
 	}
 
