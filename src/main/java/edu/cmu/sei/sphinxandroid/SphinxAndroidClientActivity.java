@@ -59,6 +59,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import edu.cmu.sei.ams.cloudlet.ServiceVM;
 import edu.cmu.sei.ams.cloudlet.android.CloudletCallback;
+import edu.cmu.sei.ams.cloudlet.android.CloudletPreferences;
 import edu.cmu.sei.ams.cloudlet.android.FindCloudletAndStartService;
 import edu.cmu.sei.ams.cloudlet.rank.CpuBasedRanker;
 import edu.cmu.sei.ams.cloudlet.android.ServiceConnectionInfo;
@@ -71,6 +72,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 	
 	public static final int MENU_ID_SETTINGS = 92189;
 	public static final int MENU_ID_CLEAR = 111163;
+    public static final int MENU_ID_ENCRYPTION = 111167;
 	
     private static final String SERVICE_ID = "edu.cmu.sei.ams.speech_rec_service";
 
@@ -179,8 +181,19 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
-		menu.add(0, MENU_ID_SETTINGS, 0, getString( R.string.menu_settings) );
+		menu.add(0, MENU_ID_SETTINGS, 0, getString(R.string.menu_settings));
 		menu.add(0, MENU_ID_CLEAR, 1, getString(R.string.menu_clear));
+
+		boolean encryptionEnabled = CloudletPreferences.isEncryptionEnabled(this);
+        String title;
+		if(encryptionEnabled) {
+			title = "Disable API Encryption";
+		}
+		else {
+            title = "Enable API Encryption";
+        }
+        menu.add(0, MENU_ID_ENCRYPTION, 2, title);
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -196,6 +209,20 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 			log = "";
 			textView.setText( log );
 			break;
+        case MENU_ID_ENCRYPTION:
+            // Change the encryption enabled state in the preferences.
+            boolean encryptionEnabled = CloudletPreferences.isEncryptionEnabled(this);
+            boolean newEncryptionState = ! encryptionEnabled;
+            CloudletPreferences.setEncryptionState(this, newEncryptionState);
+
+            if(newEncryptionState) {
+                Toast.makeText(this, "API encryption enabled", Toast.LENGTH_LONG).show();
+                item.setTitle("Disable API Encryption");
+            }
+            else {
+                Toast.makeText(this, "API encryption disabled", Toast.LENGTH_LONG).show();
+                item.setTitle("Enable API Encryption");
+            }
 		default:
 			break;
 		}

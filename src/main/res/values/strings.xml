@@ -8,6 +8,6 @@
     <string name="pref_portnumber">portnumber</string>
     <string name="pref_directory">directory</string>
     <string name="menu_settings">Settings</string>
-    <string name="menu_clear">Clear</string>
+    <string name="menu_clear">Clear Log</string>
     <string name="intent_key_directory">directory</string>
 </resources>
