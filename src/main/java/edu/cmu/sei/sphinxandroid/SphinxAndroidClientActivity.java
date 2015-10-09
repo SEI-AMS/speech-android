@@ -68,7 +68,7 @@ import edu.cmu.sei.ams.cloudlet.rank.MemoryPerformanceRanker;
 
 public class SphinxAndroidClientActivity extends Activity implements OnClickListener
 {
-	public static final String LOG_KEY = "Speech";
+	public static final String LOG_KEY = "SphinxAndroidClientActivity";
 	
 	public static final int MENU_ID_SETTINGS = 92189;
 	public static final int MENU_ID_CLEAR = 111163;
@@ -126,7 +126,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
                     return;
                 }
 
-                Log.v("FACE", "GOT SERVICE RESULT: " + result.getInstanceId());
+                Log.v(LOG_KEY, "GOT SERVICE RESULT: " + result.getInstanceId());
 
                 Toast.makeText(SphinxAndroidClientActivity.this, "Located a cloudlet to use!", Toast.LENGTH_LONG).show();
 
@@ -308,11 +308,11 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 				outToServer = new DataOutputStream( socket.getOutputStream() );
 				inFromServer = new DataInputStream( socket.getInputStream() );
 
-                Log.d("FACE", "START SENDING FILES");
+                Log.d(LOG_KEY, "START SENDING FILES");
 				int filesProccessed = 1;				
 				for( final File file: fileList )
 				{
-                    Log.d("FACE", "SENDING FILE: " +file.getName() );
+                    Log.d(LOG_KEY, "SENDING FILE: " +file.getName() );
 					publishProgress("Sending " +filesProccessed +" / " + fileCount +" file(s) \n" 
 							+file.getName() +"\n" +"File size is " + file.length() +" bytes" );
 					requestSendTime = System.currentTimeMillis();
@@ -322,7 +322,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 					publishProgress("Getting response from server..." );
 					int responseSize = inFromServer.readInt();
 					publishProgress("Response size is " + responseSize +" bytes" );
-                    Log.d("FACE", "Received response for : " +file.getName() );
+                    Log.d(LOG_KEY, "Received response for : " +file.getName() );
 					
 					if(responseSize > 0 )
 					{
@@ -335,7 +335,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 						publishProgress( response );
 						publishProgress("Request Send Time: " + requestSendTime );
 						publishProgress("Response Recieved Time: " + responseReceivedTime );
-                        Log.d("FACE", "Response time: " + rttForCurrentRequest);
+                        Log.d(LOG_KEY, "Response time: " + rttForCurrentRequest);
 						publishProgress("RTT Current Request: " + rttForCurrentRequest );
 						publishProgress("RTT Previous Request: " + rttForPreviousRequest );
 						publishProgress( "----------");
