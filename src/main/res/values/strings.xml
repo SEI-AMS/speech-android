@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Sphinx Client</string>
+    <string name="app_name">Speech Client</string>
     <string name="default_ipaddress">127.0.0.1</string>
     <string name="default_portnumber">10191</string>
     <string name="default_directory">/sdcard/</string>
