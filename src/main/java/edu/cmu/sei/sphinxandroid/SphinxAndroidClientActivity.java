@@ -72,6 +72,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 	
 	public static final int MENU_ID_SETTINGS = 92189;
 	public static final int MENU_ID_CLEAR = 111163;
+    public static final int MENU_ID_FIND_CLOUDLET = 111164;
 
     private static final String SERVICE_ID = "edu.cmu.sei.ams.speech_rec_service";
 
@@ -105,13 +106,22 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 		textView = (TextView)findViewById(R.id.text);
 		textView.setText( log );
 		currentDirTextView = (TextView)findViewById(R.id.current_dir_text);
-		
+
+		// Show version.
+		final TextView versionTextView = (TextView) findViewById(R.id.versionTextView);
+		versionTextView.setText(versionTextView.getText() + BuildConfig.VERSION_NAME);
+
 		sendButton = (Button)findViewById(R.id.send_button);
 		sendButton.setOnClickListener( this );
 
         loadPreferences();
 
-		loadCurrentFileList();
+        loadCurrentFileList();
+
+        if(savedInstanceState == null)
+        {
+            findService();
+        }
 	}
 
     protected void findService()
@@ -172,7 +182,6 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 	protected void onResume() 
 	{
         loadPreferences();
-        findService();
 
 		super.onResume();
 	}
@@ -182,6 +191,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 	{
 		menu.add(0, MENU_ID_SETTINGS, 0, getString(R.string.menu_settings));
 		menu.add(0, MENU_ID_CLEAR, 1, getString(R.string.menu_clear));
+        menu.add(0, MENU_ID_FIND_CLOUDLET, 1, getString(R.string.menu_find_cloudlet));
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -198,6 +208,8 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 			log = "";
 			textView.setText( log );
 			break;
+        case MENU_ID_FIND_CLOUDLET:
+            findService();
 		default:
 			break;
 		}

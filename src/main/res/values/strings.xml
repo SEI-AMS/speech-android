@@ -9,5 +9,6 @@
     <string name="pref_directory">directory</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_clear">Clear Log</string>
+    <string name="menu_find_cloudlet">Find Service</string>
     <string name="intent_key_directory">directory</string>
 </resources>
