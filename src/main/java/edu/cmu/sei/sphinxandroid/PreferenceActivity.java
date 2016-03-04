@@ -56,7 +56,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		addPreferencesFromResource(R.xml.prefs);
 
 		ipaddressPref = (EditTextPreference)getPreferenceScreen()
-		.findPreference( getString(R.string.pref_ipaddress) );
+		.findPreference( getString(R.string.pref_domain) );
 
 		portnumberPref = (EditTextPreference)getPreferenceScreen()
 		.findPreference( getString( R.string.pref_portnumber));
@@ -79,7 +79,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 	{
 		String ipAddress = getPreferenceScreen()
 		.getSharedPreferences()
-		.getString( getString(R.string.pref_ipaddress), getString(R.string.default_ipaddress));
+		.getString( getString(R.string.pref_domain), getString(R.string.default_domain));
 		ipaddressPref.setSummary(ipAddress);
 
 		String portNumber = getPreferenceScreen()

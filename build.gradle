@@ -48,7 +48,7 @@ android {
 dependencies {
     compile (
         'com.android.support:appcompat-v7:19.+',
-        'edu.cmu.sei.ams.cloudlet:client-lib:2.2.0',
+        'edu.cmu.sei.ams.cloudlet:client-lib:2.3.0',
         'edu.cmu.sei.ams.cloudlet:client-lib-android:2.4.0',
         'edu.cmu.sei.ams.log:android-slf4j-logger:1.4.1'
     )

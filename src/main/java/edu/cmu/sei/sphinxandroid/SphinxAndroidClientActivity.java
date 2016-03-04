@@ -59,12 +59,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import edu.cmu.sei.ams.cloudlet.ServiceVM;
 import edu.cmu.sei.ams.cloudlet.android.CloudletCallback;
-import edu.cmu.sei.ams.cloudlet.android.CloudletPreferences;
 import edu.cmu.sei.ams.cloudlet.android.FindCloudletAndStartService;
 import edu.cmu.sei.ams.cloudlet.rank.CpuBasedRanker;
 import edu.cmu.sei.ams.cloudlet.android.ServiceConnectionInfo;
-import edu.cmu.sei.ams.cloudlet.rank.CpuPerformanceRanker;
-import edu.cmu.sei.ams.cloudlet.rank.MemoryPerformanceRanker;
 
 public class SphinxAndroidClientActivity extends Activity implements OnClickListener
 {
@@ -139,10 +136,10 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 
                 Toast.makeText(SphinxAndroidClientActivity.this, "Located a cloudlet to use!", Toast.LENGTH_LONG).show();
 
-                connectionInfo.setIpAddress(result.getAddress().getHostAddress());
+                connectionInfo.setDomainName(result.getDomainName());
                 connectionInfo.setPortNumber(result.getPort());
                 connectionInfo.storeIntoPreferences(SphinxAndroidClientActivity.this,
-                        SphinxAndroidClientActivity.this.getString(R.string.pref_ipaddress),
+                        SphinxAndroidClientActivity.this.getString(R.string.pref_domain),
                         SphinxAndroidClientActivity.this.getString(R.string.pref_portnumber));
             }
         }).execute();
@@ -219,7 +216,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 	public void loadPreferences()
 	{
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( this );
-		this.connectionInfo.setIpAddress(prefs.getString(getString(R.string.pref_ipaddress), getString(R.string.default_ipaddress)));
+		this.connectionInfo.setDomainName(prefs.getString(getString(R.string.pref_domain), getString(R.string.default_domain)));
 		this.connectionInfo.setPortNumber(Integer.parseInt(prefs.getString(getString(R.string.pref_portnumber), getString(R.string.default_portnumber))));
 		this.directoryString = prefs.getString( getString( R.string.pref_directory), getString(R.string.default_directory));
 		currentDirTextView.setText( directoryString );
