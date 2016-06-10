@@ -139,7 +139,7 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
                 // If the domain name is not set, get the IP directly.
 				String domainName = result.getDomainName();
 				if(domainName == null)
-					domainName = result.getAddress().toString();
+					domainName = result.getAddress().getHostAddress();
 
                 connectionInfo.setDomainName(domainName);
                 connectionInfo.setPortNumber(result.getPort());
