@@ -136,7 +136,12 @@ public class SphinxAndroidClientActivity extends Activity implements OnClickList
 
                 Toast.makeText(SphinxAndroidClientActivity.this, "Located a cloudlet to use!", Toast.LENGTH_LONG).show();
 
-                connectionInfo.setDomainName(result.getDomainName());
+                // If the domain name is not set, get the IP directly.
+				String domainName = result.getDomainName();
+				if(domainName == null)
+					domainName = result.getAddress().toString();
+
+                connectionInfo.setDomainName(domainName);
                 connectionInfo.setPortNumber(result.getPort());
                 connectionInfo.storeIntoPreferences(SphinxAndroidClientActivity.this,
                         SphinxAndroidClientActivity.this.getString(R.string.pref_domain),
